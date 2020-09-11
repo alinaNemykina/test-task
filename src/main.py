@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     # Использование метода ближайших соседей для поиска ближайших соседей к целевому объекту.
     # Указываем косинусную метрику. Чем она меньше, тем ближе объекты в векторном пространстве(более похожи изображения)
-    # В качестве алгоритма указываем brute-force search (попарно сравнивает вектора)
+    # В качестве алгоритма указан brute-force search (попарно сравнивает вектора)
     knn = NearestNeighbors(metric='cosine', algorithm='brute')
     vecs = vectorize_all(files, model, n_dims=4096)
     knn.fit(vecs)
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     fname = 'data/target_image.jpg'
     vec = vectorize(fname, model)
 
-    # Функция kneighbors() возращает значения dist, которые определяют, насколько "близки" картинки с target
+    # Метод kneighbors() возращает значения dist, которые определяют, насколько "близки" картинки с target
     # изображением (количество возращаемых соседей = количеству изображений)
     dist, indices = knn.kneighbors(vec.reshape(1, -1), n_neighbors=len(files))
     dist, indices = dist.flatten(), indices.flatten()
@@ -74,4 +74,4 @@ if __name__ == '__main__':
     print('Картинка'.ljust(65), end='')
     print('Метрика')
     for image, dist in similar_images:
-        print(f'{image:60}', f'{dist}')
+        print(f'{image:60} {dist}')
